@@ -1,0 +1,8 @@
+{
+    "authors": [
+        "Ippei Taniguchi"
+    ],
+    "description": "Hello D-world collection. (test of standard features)",
+    "license": "NYSL-0.9982 or WTFPL-2",
+    "name": "hello"
+}
