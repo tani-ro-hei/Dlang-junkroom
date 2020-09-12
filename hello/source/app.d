@@ -9,6 +9,7 @@ import std.stdio;
 import std.algorithm, std.conv, std.range;
 import std.ascii, std.regex, std.string;
 import std.datetime;
+import std.windows.charset;
 
 
 void display(void function() fn, ref uint cnt)
@@ -43,7 +44,15 @@ void hello1()
 
     // UFCS 利用
     "hello world\n".write();
+
+    // Shift_JIS でターミナル出力
+    write(sjenc("こんにちは、世界！\n"));
 }
+
+string sjenc(string str) { return(str.toMBSz.to!string); }
+string sjdec(string str) { return(str.toStringz.fromMBSz); }
+string eucenc(string str) { return(str.toMBSz(20932).to!string); }
+string eucdec(string str) { return(str.toStringz.fromMBSz(20932)); }
 
 // # ループ構文のテスト
 void hello2()
