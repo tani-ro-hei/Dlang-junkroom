@@ -1,8 +1,7 @@
 /*
  *  Hello D-world collection.
- *  (hello に移動し、dub run -q で実行)
+ *  (hello に移動し、dub test で検証、dub run -q で実行)
  */
-
 
 // imports (適当にいっぱい)
 import std.stdio;
@@ -33,11 +32,10 @@ void main()
     //display(&hello8, cnt);
     //display(&hello9, cnt);
 }
+// ==============================
 
 
-// ====================
-
-// # 標準出力のテスト
+// #標準出力とエンコードのテスト
 void hello1()
 {
     writeln("Hello, World!");
@@ -49,25 +47,50 @@ void hello1()
     write(sjenc("こんにちは、世界！\n"));
 }
 
-string sjenc(string str) { return(str.toMBSz.to!string); }
-string sjdec(string str) { return(str.toStringz.fromMBSz); }
+string sjenc(string str)  { return(str.toMBSz.to!string); }
+string sjdec(string str)  { return(str.toStringz.fromMBSz); }
 string eucenc(string str) { return(str.toMBSz(20932).to!string); }
 string eucdec(string str) { return(str.toStringz.fromMBSz(20932)); }
 
-// # ループ構文のテスト
+unittest
+{
+    assert("日本語表現".sjenc.sjdec.eucenc.eucdec == "日本語表現");
+    assert("日本語表現".sjenc != "日本語表現");
+}
+
+// #ループ構文のテスト
 void hello2()
 {
     immutable int sup = 6;
+    immutable int min = 7;
 
-    foreach(int a; 3 .. sup) {
-        foreach(int b; 7 .. 9) {
+    // ブレースは必須ではない
+    foreach(int a; 3 .. sup)
+        foreach(int b; min .. 9)
             writef("%s:%s ", a, b);
-        }
-    }
     writeln("");
+
+
+    char[] helloArr = ['h', 'E', 'l', 'L', 'o',];
+    assert(helloArr.length == 5);
+
+    // 逆順で実行されてゆく
+    scope(exit)    write("!\n");
+    scope(success) write("RlD");
+    scope(exit)    write("Wo");
+    scope(success) write(", ");
+
+    // なんとなくミクスイン
+    mixin("int sum = 0;");
+
+    foreach(idx, chr; helloArr) {
+        write(chr);
+        sum += idx;
+    }
+    writef("(0+1+2+3+4=%s)", sum);
 }
 
-// # 辞書のテスト
+// #辞書のテスト
 void hello3()
 {
     string[string] dict;
@@ -87,7 +110,7 @@ void _piyolize(ref string[string] dict, string str)
     dict[ str ] = "piyo";
 }
 
-// # ファイル入出力テスト
+// #ファイル入出力テスト
 void hello4()
 {
     string iof = "./IO-file";
