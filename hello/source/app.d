@@ -97,19 +97,53 @@ void hello3()
         dchar[] arr1 = ['h', 'e'];
         dchar[] arr2 = ['l', 'l', 'o', '!'];
         dchar[][] arr = [arr1, arr2];
+        // 便利なフォーマット
         writefln("<%(%(%s/%):%)>", arr);
     }
 
+    {
+        // 多次元配列
+        int[][][] arr = [
+            [
+                [0, 0], [0, 0], [0, 0], [0, 0],
+            ],
+            [
+                [0, 0], [0, 0], [0, 0], [0, 0],
+            ],
+            [
+                [0, 0], [0, 0], [0, 0], [42, 0],
+            ],
+        ];
+        writefln("%s", arr[2][3][0]);  //=> 42
+    }
+
     string[string] dict;
+    string[string] dict2;
+
     char[] hg = "hoge".dup;
     dict[ hg.idup ] = "fuga";
+
+    dict2 = [ "hoge" : "fuga", ];
+    assert(dict == dict2);
+
     dict._piyolize("hoge");
     dict["hoge"].writeln();
+
+    dict2["hoge"] = "piyo";
+    assert(dict == dict2);
 
     dict.remove("hoge");
     if(!("hoge" in dict)) {
         writeln("key<hoge> is removed!");
     }
+
+    dict2["hogehoge"] = "piyopiyo";
+    writeln("keys: ", dict2.keys);
+
+    if(auto val = "hogehoge" in dict2) {
+        *val = "Hello D!";
+    }
+    writeln(dict2["hogehoge"]);
 }
 
 void _piyolize(ref string[string] dict, string str)
@@ -140,9 +174,9 @@ void hello4()
         // 追記モード
         auto testfile = File(iof, "a");
 
-        // 実行時を追記する
+        // 実行時を追記する (うざいので いったんコメントアウト)
         auto curr = Clock.currTime().toString();
-        testfile.writeln("added at ", curr);
+        //testfile.writeln("added at ", curr);
     }
 }
 
