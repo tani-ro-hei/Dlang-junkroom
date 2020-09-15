@@ -16,6 +16,9 @@ void display(void function() fn, ref uint cnt)
     writefln(">>>>> (%s) >>>>>", ++cnt);
     fn();
     writefln("<<<<< (%s) <<<<<", cnt);
+
+    import core.thread;
+    Thread.sleep( dur!("msecs")(200) );
 }
 
 void main()
@@ -27,7 +30,7 @@ void main()
     display(&hello3, cnt);
     display(&hello4, cnt);
     display(&hello5, cnt);
-    //display(&hello6, cnt);
+    display(&hello6, cnt);
     //display(&hello7, cnt);
     //display(&hello8, cnt);
     //display(&hello9, cnt);
@@ -205,7 +208,27 @@ void hello5()
     }
 }
 
-//void hello6(){}
+// #円周率を計算
+// 【参考】http://www.ss.cs.meiji.ac.jp/CCP051.html
+void hello6()
+{
+    real a = 0.5;
+    real p = 0.0;
+    int  n = 0;
+
+    real prev_p = 1.0;
+    while(p != prev_p) {
+        prev_p = p;
+
+        p += a;
+        n++;
+        a *= ((2 * n - 1) * (2 * n - 1));
+        a /= (8 * n * (2 * n + 1));
+    }
+
+    writefln("PI = %.20f (n = %s)", (6.0 * p), n);
+}
+
 //void hello7(){}
 //void hello8(){}
 //void hello9(){}
