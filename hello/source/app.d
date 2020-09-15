@@ -26,7 +26,7 @@ void main()
     display(&hello2, cnt);
     display(&hello3, cnt);
     display(&hello4, cnt);
-    //display(&hello5, cnt);
+    display(&hello5, cnt);
     //display(&hello6, cnt);
     //display(&hello7, cnt);
     //display(&hello8, cnt);
@@ -90,9 +90,16 @@ void hello2()
     writef("(0+1+2+3+4=%s)", sum);
 }
 
-// #辞書のテスト
+// #配列と辞書のテスト
 void hello3()
 {
+    {
+        dchar[] arr1 = ['h', 'e'];
+        dchar[] arr2 = ['l', 'l', 'o', '!'];
+        dchar[][] arr = [arr1, arr2];
+        writefln("<%(%(%s/%):%)>", arr);
+    }
+
     string[string] dict;
     char[] hg = "hoge".dup;
     dict[ hg.idup ] = "fuga";
@@ -139,7 +146,31 @@ void hello4()
     }
 }
 
-//void hello5(){}
+// #例外処理のテスト
+void hello5()
+{
+    {
+        // ブロックスコープでインポート
+        import std.math : PI;
+
+        "%s".writefln(PI);
+    }
+
+    // これはシステム Error なので catch できない
+    //"%s".writefln(PI);
+
+
+    try {
+        throw new Exception("Hello Err World");
+    }
+    catch(Exception e) {
+        write(e.msg);
+    }
+    finally {
+        writeln("!!");
+    }
+}
+
 //void hello6(){}
 //void hello7(){}
 //void hello8(){}
