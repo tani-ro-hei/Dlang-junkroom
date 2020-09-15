@@ -1,6 +1,6 @@
 /*
  *  Hello D-world collection.
- *  (hello に移動し、dub test で検証、dub run -q で実行)
+ *  (hello に移動し、dub test で検証; dub run -q で実行)
  */
 
 // imports (適当にいっぱい)
@@ -69,8 +69,8 @@ void hello2()
 
     // ブレースは必須ではない
     foreach(int a; 3 .. sup)
-        foreach(int b; min .. 9)
-            writef("%s:%s ", a, b);
+    foreach(int b; min .. 9)
+        writef("%s:%s ", a, b);
     writeln("");
 
 
@@ -105,17 +105,11 @@ void hello3()
     }
 
     {
-        // 多次元配列
+        // 多次元配列 (ケツカンマok)
         int[][][] arr = [
-            [
-                [0, 0], [0, 0], [0, 0], [0, 0],
-            ],
-            [
-                [0, 0], [0, 0], [0, 0], [0, 0],
-            ],
-            [
-                [0, 0], [0, 0], [0, 0], [42, 0],
-            ],
+            [ [0, 0], [0, 0], [0, 0], [0 , 0], ],
+            [ [0, 0], [0, 0], [0, 0], [0 , 0], ],
+            [ [0, 0], [0, 0], [0, 0], [42, 0], ],
         ];
         writefln("%s", arr[2][3][0]);  //=> 42
     }
@@ -193,11 +187,10 @@ void hello5()
         "%s".writefln(PI);
     }
 
-    // これはシステム Error なので catch できない
-    //"%s".writefln(PI);
-
-
     try {
+        // これはシステム Error なので catch できない
+        //"%s".writefln(PI);
+
         throw new Exception("Hello Err World");
     }
     catch(Exception e) {
@@ -209,7 +202,7 @@ void hello5()
 }
 
 // #円周率を計算
-// 【参考】http://www.ss.cs.meiji.ac.jp/CCP051.html
+// 参考>>> http://www.ss.cs.meiji.ac.jp/CCP051.html
 void hello6()
 {
     real a = 0.5;
